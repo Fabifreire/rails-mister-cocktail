@@ -1,0 +1,21 @@
+<%= simple_form_for (@cocktail) do |f| %>
+	<%= f.error_notification %>
+
+	<% if @cocktail.errors.any? %>
+		<h4> Please insert your ingredients properly </h4>
+		<ul>
+			<% @cocktail.errors.full_messages.each do |message| %>
+				<li> <%= message %></li>
+				<% end %>
+		</ul>
+	<% end %>
+
+	<div class="form-inputs">
+		<%= f.input :name %>
+	</div>
+
+	<div class="form-actions">
+		<%= f.button :submit %>
+	</div>
+<% end %>
+
