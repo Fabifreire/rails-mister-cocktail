@@ -1,5 +1,10 @@
 <h1> Cocktail </h1>
 <h3> <%= @cocktail.name %> </h3>
+<% if @cocktail.photo.attached? %>
+<%= cl_image_tag @cocktail.photo.key, height: 300, width: 400, crop: :fill %>
+<% else %>
+<%= image_tag "Cocacola.jpg", height: 500, width: 700, crop: :fill %>
+<% end %>
 
 <ul>
 	<% @cocktail.doses.each do |dose| %>
@@ -12,4 +17,4 @@
 	<% end %>
 </ul>
 <%= render "doses/new" %>
-<%= link_to 'Return', cocktails_path %>
+<%= link_to 'Return', cocktails_path, class: 'btn btn-primary' %>
