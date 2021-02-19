@@ -5,12 +5,17 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-Cocktail.destroy_all
-Dose.destroy_all
+puts "Destroying the database..."
 Ingredient.destroy_all
-puts "cleaning the database..."
-Ingredient.create(name: "lemon")
-Ingredient.create(name: "ice")
-Ingredient.create(name: "mint leaves")
-Ingredient.create(name: "orange")
-puts "Ingredients added!"
+
+puts "Creating the list of ingredients from the JSON url"
+url = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list'
+response = RestClient.get(url)
+json = JSON.parse(response, symbolize_names: true)
+
+ingredients = json[:drinks] # array of hashes
+ingredients.each do |ingredient|
+  Ingredient.create!(name: ingredient[:strIngredient1])
+end
+
+puts "Done :)"
